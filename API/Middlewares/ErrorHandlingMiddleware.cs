@@ -15,9 +15,17 @@ public class ErrorHandlingMiddleware(RequestDelegate next, ILogger<ErrorHandling
         {
             await _next(context);
         }
+        catch (ValidationAppException ex)
+        {
+            await HandleValidationAppExceptionAsync(context, ex);
+        }
         catch (NoContentException ex)
         {
             await HandleNoContentExceptionAsync(context, ex);
+        }
+        catch (ConflitException ex)
+        {
+            await HandleConflitExceptionAsync(context, ex);
         }
         catch (NotFoundException ex)
         {
@@ -33,6 +41,20 @@ public class ErrorHandlingMiddleware(RequestDelegate next, ILogger<ErrorHandling
         }
     }
 
+    private static async Task HandleValidationAppExceptionAsync(HttpContext context, ValidationAppException exception)
+    {
+        var response = new
+        {
+            message = "Validation failed",
+            errors = exception.Errors
+        };
+
+        context.Response.ContentType = "application/json";
+        context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+
+        await context.Response.WriteAsync(JsonSerializer.Serialize(response));
+    }
+
     private static async Task HandleNoContentExceptionAsync(HttpContext context, NoContentException exception)
     {
         var response = new
@@ -42,6 +64,19 @@ public class ErrorHandlingMiddleware(RequestDelegate next, ILogger<ErrorHandling
 
         context.Response.ContentType = "application/json";
         context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+
+        await context.Response.WriteAsync(JsonSerializer.Serialize(response));
+    }
+
+    private static async Task HandleConflitExceptionAsync(HttpContext context, ConflitException exception)
+    {
+        var response = new
+        {
+            message = exception.Message ?? "Não foi possível realizar a operação",
+        };
+
+        context.Response.ContentType = "application/json";
+        context.Response.StatusCode = (int)HttpStatusCode.Conflict;
 
         await context.Response.WriteAsync(JsonSerializer.Serialize(response));
     }

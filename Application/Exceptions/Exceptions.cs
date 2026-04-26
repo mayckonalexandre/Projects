@@ -2,13 +2,26 @@
 
 public class Exceptions
 {
-    public class NotFoundException : Exception
+    public class NotFoundException(string message) : Exception(message)
     {
-        public NotFoundException(string message) : base(message) { }
     }
 
-    public class NoContentException : Exception
+    public class NoContentException(string message) : Exception(message)
     {
-        public NoContentException(string message) : base(message) { }
+    }
+
+    public class ConflitException(string message) : Exception(message)
+    {
+    }
+
+    public class ValidationAppException : Exception
+    {
+        public Dictionary<string, string[]> Errors { get; }
+
+        public ValidationAppException(Dictionary<string, string[]> errors)
+            : base("Validation failed")
+        {
+            Errors = errors;
+        }
     }
 }

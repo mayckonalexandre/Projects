@@ -2,7 +2,7 @@
 using Domain.Contracts;
 using static Application.Exceptions.Exceptions;
 
-namespace Application.Services.User;
+namespace Application.Modules.Users.Services;
 
 public class UserService(IUserRepository userRepository) : IUserService
 {

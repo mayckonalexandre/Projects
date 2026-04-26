@@ -1,6 +1,8 @@
-﻿using Domain.Contracts;
-using Infrastructure.Context;
-using Infrastructure.Repositories;
+﻿using Application.Common;
+using Domain.Contracts;
+using Infrastructure.Persistence;
+using Infrastructure.Persistence.Context;
+using Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,6 +17,8 @@ public static class DependencyInjection
             options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"))
         );
 
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
         services.AddScoped<IUserRepository, UserRepository>();
         return services;
     }

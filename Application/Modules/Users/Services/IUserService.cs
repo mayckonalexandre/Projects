@@ -1,8 +1,8 @@
 ﻿using Application.Common.Dtos;
 
-namespace Application.Services.User;
+namespace Application.Modules.Users.Services;
 
-public interface IUserService
+public interface IUserService 
 {
     Task<UserDto> GetByIdAsync(int id);
 }
