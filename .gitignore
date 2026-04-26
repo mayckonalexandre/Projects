@@ -1,0 +1,66 @@
+# Build
+bin/
+obj/
+out/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider / VS Code
+.idea/
+.vscode/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# NuGet
+*.nupkg
+packages/
+.nuget/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Test results
+TestResults/
+*.trx
+
+# Entity Framework
+Migrations/
+# ⚠️ Se quiser versionar migrations, REMOVA essa linha
+
+# Publish
+publish/
+
+# Docker
+docker-compose.override.yml
+
+# Environment variables
+.env
+.env.*
+
+# ASP.NET Core
+appsettings.Development.json
+
+# Secrets
+secrets.json
+
+# Coverage
+coverage/
+*.coverage
+*.coveragexml
+
+# Node (caso tenha frontend junto)
+node_modules/
+
+# Temp files
+*.tmp
+*.temp
