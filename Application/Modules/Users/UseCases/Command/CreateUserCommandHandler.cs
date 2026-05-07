@@ -25,8 +25,10 @@ public class CreateUserCommandHandler(IUserRepository userRepository, IUnitOfWor
         {
             Name = request.Name,
             Email = request.Email,
-            Password = _passwordHasher.HashPassword(null, request.Password)
+            Password = string.Empty,
         };
+
+        user.Password = _passwordHasher.HashPassword(user, request.Password);
 
         await _userRepository.AddAsync(user);
 
